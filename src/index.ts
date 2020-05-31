@@ -12,7 +12,7 @@ const defaults = {
 
 type MemoOptions = Partial<typeof defaults>
 
-export async function getMemo (options: MemoOptions): Promise<object> {
+export async function getMemo (options: MemoOptions): Promise<any> {
   const { file } = getOptions(options)
 
   // Try to load latest memo

@@ -25,7 +25,7 @@ import { getMemo, setMemo } from 'fs-memo'
 ### `getMemo(options)`
 
 ```ts
-getMemo(options: MemoOptions): Promise<object>
+getMemo(options: MemoOptions): Promise<any>
 ```
 
 Load latest memo from file-system and combine with local state from CJS cache.
