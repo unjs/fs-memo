@@ -17,10 +17,13 @@ export async function getMemo (options: MemoOptions): Promise<object> {
 
   // Try to load latest memo
   try {
-    const memo = JSON.parse(await fs.readFile(file, 'utf-8'))
+    const memo = JSON.parse(await fs.readFile(file, 'utf-8')) || {}
+    if (!memo._pid) {
+      throw new Error('InvalidMemo')
+    }
     if (
-      (memo.pid && !isAlive(memo.pid)) || // RIP
-      memo._pid === _memo._pid // fs is more reliable than require cache
+      memo._pid === _memo._pid || // fs is more reliable than require cache
+      !isAlive(memo.pid) // RIP
     ) {
       Object.assign(_memo, memo)
       _memo._pid = process.pid
