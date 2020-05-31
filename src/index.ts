@@ -1,6 +1,5 @@
 import { promises as fs } from 'fs'
 import { resolve } from 'path'
-import { pid } from 'process'
 
 const _memo = {
   _pid: process.pid
@@ -20,7 +19,7 @@ export async function getMemo (options: MemoOptions): Promise<object> {
   try {
     const memo = JSON.parse(await fs.readFile(file, 'utf-8'))
     if (
-      !isAlive(pid) || // RIP
+      (memo.pid && !isAlive(memo.pid)) || // RIP
       memo._pid === _memo._pid // fs is more reliable than require cache
     ) {
       Object.assign(_memo, memo)
