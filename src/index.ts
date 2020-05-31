@@ -8,7 +8,7 @@ const _memo = {
 
 const defaults = {
   dir: __dirname,
-  name: '.getport'
+  name: '.fs-memo'
 }
 
 type MemoOptions = Partial<typeof defaults>
