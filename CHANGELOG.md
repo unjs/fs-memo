@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/nuxt-contrib/fs-memo/compare/v0.0.2...v0.0.3) (2020-05-31)
+
+
+### Bug Fixes
+
+* pid check ([f5f6706](https://github.com/nuxt-contrib/fs-memo/commit/f5f67068c8dc731c2c39b42bb6b8cb0dc18cf286))
+
 ### [0.0.2](https://github.com/nuxt-contrib/fs-memo/compare/v0.0.1...v0.0.2) (2020-05-31)
 
 
