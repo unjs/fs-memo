@@ -10,7 +10,10 @@ const defaults = {
   name: '.fs-memo'
 }
 
-type MemoOptions = Partial<typeof defaults>
+interface MemoOptions {
+  dir?: string
+  name?: string
+}
 
 export async function getMemo (options: MemoOptions): Promise<any> {
   const { file } = getOptions(options)
@@ -51,7 +54,11 @@ export async function setMemo (memo: object, options: MemoOptions): Promise<void
 }
 
 function getOptions (options: MemoOptions): typeof defaults & { file: string } {
-  const opts: any = { ...defaults, options }
+  const opts = {
+    ...defaults,
+    ...options,
+    file: ''
+  }
   opts.file = resolve(opts.dir, opts.name)
   return opts
 }
