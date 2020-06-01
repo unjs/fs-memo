@@ -1,6 +1,6 @@
 {
   "name": "fs-memo",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "easy persisted memo object",
   "repository": "nuxt-contrib/fs-memo",
   "license": "MIT",
