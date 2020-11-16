@@ -10,17 +10,16 @@
     "dist"
   ],
   "scripts": {
-    "build": "bili src/index.ts --minimal",
+    "build": "siroc build",
     "lint": "eslint --ext ts .",
     "release": "yarn build && standard-version && npm publish && git push --follow-tags"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config-typescript": "^2.0.0",
-    "@types/node": "^14.0.6",
-    "bili": "^4.10.0",
-    "eslint": "^7.1.0",
-    "rollup-plugin-typescript2": "^0.27.1",
-    "standard-version": "^8.0.0",
-    "typescript": "^3.9.3"
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "@types/node": "latest",
+    "eslint": "latest",
+    "siroc": "^0.4.0",
+    "standard-version": "latest",
+    "typescript": "latest"
   }
 }
