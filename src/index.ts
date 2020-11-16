@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs'
-import { resolve } from 'path'
+import { resolve, dirname } from 'path'
 
 const _memo = {
   _pid: process.pid
@@ -12,11 +12,11 @@ interface MemoOptions {
 }
 
 export async function getMemo (config: Partial<MemoOptions>): Promise<any> {
-  const options = getOptions(config)
+  const file = getFile(config)
 
   // Try to load latest memo
   try {
-    const memo = JSON.parse(await fs.readFile(options.file, 'utf-8')) || {}
+    const memo = JSON.parse(await fs.readFile(file, 'utf-8')) || {}
     if (!memo._pid) {
       throw new Error('Memo lacks _pid')
     }
@@ -35,23 +35,25 @@ export async function getMemo (config: Partial<MemoOptions>): Promise<any> {
 }
 
 export async function setMemo (memo: object, config: Partial<MemoOptions>): Promise<void> {
-  const options = getOptions(config)
+  const file = getFile(config)
 
   // Set local memo
   Object.assign(_memo, memo)
   _memo._pid = process.pid
 
   // Try to persist
-  try { await fs.mkdir(options.dir) } catch (e) { }
-  try { await fs.writeFile(options.file, JSON.stringify(_memo), 'utf-8') } catch (e) { }
+  try { await fs.mkdir(dirname(file)) } catch (e) { }
+  try { await fs.writeFile(file, JSON.stringify(_memo), 'utf-8') } catch (e) { }
 }
 
-function getOptions (config: Partial<MemoOptions>): MemoOptions {
-  const options = { ...config }
-  options.name = options.name || 'default'
-  options.dir = options.dir || resolve(process.cwd(), 'node_modules/.cache/fs-memo')
-  options.file = options.file || resolve(options.dir, options.name + '.json')
-  return options as MemoOptions
+function getFile (config: Partial<MemoOptions>): string {
+  if (config.file) {
+    return config.file
+  }
+  return resolve(
+    config.dir || resolve(process.cwd(), 'node_modules/.cache/fs-memo'),
+    (config.name || 'default') + '.json'
+  )
 }
 
 function isAlive (pid: number): Boolean {
