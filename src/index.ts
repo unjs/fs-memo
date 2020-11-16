@@ -5,24 +5,20 @@ const _memo = {
   _pid: process.pid
 }
 
-const defaults = {
-  dir: resolve(process.cwd(), 'node_modules/.cache/fs-memo'),
-  name: 'default'
-}
-
 interface MemoOptions {
-  dir?: string
-  name?: string
+  dir: string
+  name: string,
+  file: string
 }
 
-export async function getMemo (options: MemoOptions): Promise<any> {
-  const { file } = getOptions(options)
+export async function getMemo (config: Partial<MemoOptions>): Promise<any> {
+  const options = getOptions(config)
 
   // Try to load latest memo
   try {
-    const memo = JSON.parse(await fs.readFile(file, 'utf-8')) || {}
+    const memo = JSON.parse(await fs.readFile(options.file, 'utf-8')) || {}
     if (!memo._pid) {
-      throw new Error('InvalidMemo')
+      throw new Error('Memo lacks _pid')
     }
     if (
       memo._pid === _memo._pid || // fs is more reliable than require cache
@@ -38,26 +34,24 @@ export async function getMemo (options: MemoOptions): Promise<any> {
   return _memo
 }
 
-export async function setMemo (memo: object, options: MemoOptions): Promise<void> {
-  const { file } = getOptions(options)
+export async function setMemo (memo: object, config: Partial<MemoOptions>): Promise<void> {
+  const options = getOptions(config)
 
   // Set local memo
   Object.assign(_memo, memo)
   _memo._pid = process.pid
 
   // Try to persist
-  try { await fs.mkdir(options.dir!) } catch (e) { }
-  try { await fs.writeFile(file, JSON.stringify(_memo), 'utf-8') } catch (e) { }
+  try { await fs.mkdir(options.dir) } catch (e) { }
+  try { await fs.writeFile(options.file, JSON.stringify(_memo), 'utf-8') } catch (e) { }
 }
 
-function getOptions (options: MemoOptions): typeof defaults & { file: string } {
-  const opts = {
-    ...defaults,
-    ...options,
-    file: ''
-  }
-  opts.file = resolve(opts.dir, opts.name + '.json')
-  return opts
+function getOptions (config: Partial<MemoOptions>): MemoOptions {
+  const options = { ...config }
+  options.name = options.name || 'default'
+  options.dir = options.dir || resolve(process.cwd(), 'node_modules/.cache/fs-memo')
+  options.file = options.file || resolve(options.dir, options.name + '.json')
+  return options as MemoOptions
 }
 
 function isAlive (pid: number): Boolean {

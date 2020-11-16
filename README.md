@@ -34,7 +34,7 @@ FS loading silently bails if:
  - The process that made memo is still alive with different pid
  - Any fs error happens (like permission denied)
 
-### `setMemo(eoptions)`
+### `setMemo(options)`
 
 ```ts
 setMemo(memo: object, options: MemoOptions): Promise<void>
@@ -46,13 +46,6 @@ FS persistence silently bails if any error happens.
 
 ## Options
 
-```ts
-interface MemoOptions {
-  dir?: string
-  name?: string
-}
-```
-
 ### `dir`
 
 Specify directory where memo file should be stored. Default dir is `node_modules/.cache/fs-memo`
@@ -60,6 +53,11 @@ Specify directory where memo file should be stored. Default dir is `node_modules
 ### `name`
 
 Name of memo file. Default name is `default` (`.json` is appended to file name)
+
+### `file`
+
+Optionally provide full path to file (discards `dir` and `name` options)
+
 
 ## License
 
