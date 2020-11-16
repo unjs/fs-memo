@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/nuxt-contrib/fs-memo/compare/v1.0.1...v1.1.0) (2020-11-16)
+
+
+### Features
+
+* write to node_modules/.cache/fs-memo/default.json ([4697250](https://github.com/nuxt-contrib/fs-memo/commit/46972506d0a655c1f2e96c3998fc8bc477abea27))
+
 ### [1.0.1](https://github.com/nuxt-contrib/fs-memo/compare/v1.0.0...v1.0.1) (2020-06-16)
 
 ## [1.0.0](https://github.com/nuxt-contrib/fs-memo/compare/v0.0.6...v1.0.0) (2020-06-16)
