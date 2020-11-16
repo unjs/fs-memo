@@ -55,11 +55,11 @@ interface MemoOptions {
 
 ### `dir`
 
-Specify directory where memo file should be stored. Default dir is `__dirname` (`node_modules/fs-memo/dist`)
+Specify directory where memo file should be stored. Default dir is `node_modules/.cache/fs-memo`
 
 ### `name`
 
-Name of memo file. Default name is `.fs-memo`.
+Name of memo file. Default name is `default` (`.json` is appended to file name)
 
 ## License
 

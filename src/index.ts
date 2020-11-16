@@ -6,8 +6,8 @@ const _memo = {
 }
 
 const defaults = {
-  dir: __dirname,
-  name: '.fs-memo'
+  dir: resolve(process.cwd(), 'node_modules/.cache/fs-memo'),
+  name: 'default'
 }
 
 interface MemoOptions {
@@ -46,11 +46,8 @@ export async function setMemo (memo: object, options: MemoOptions): Promise<void
   _memo._pid = process.pid
 
   // Try to persist
-  try {
-    await fs.writeFile(file, JSON.stringify(_memo), 'utf-8')
-  } catch (e) {
-    // Ignore
-  }
+  try { await fs.mkdir(options.dir!) } catch (e) { }
+  try { await fs.writeFile(file, JSON.stringify(_memo), 'utf-8') } catch (e) { }
 }
 
 function getOptions (options: MemoOptions): typeof defaults & { file: string } {
@@ -59,7 +56,7 @@ function getOptions (options: MemoOptions): typeof defaults & { file: string } {
     ...options,
     file: ''
   }
-  opts.file = resolve(opts.dir, opts.name)
+  opts.file = resolve(opts.dir, opts.name + '.json')
   return opts
 }
 
