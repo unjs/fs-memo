@@ -11,7 +11,7 @@ interface MemoOptions {
   file: string
 }
 
-export async function getMemo (config: Partial<MemoOptions>): Promise<any> {
+export async function getMemo <T extends object = object> (config: Partial<MemoOptions>): Promise<T> {
   const file = getFile(config)
 
   // Try to load latest memo
@@ -31,10 +31,10 @@ export async function getMemo (config: Partial<MemoOptions>): Promise<any> {
     // Ignore
   }
 
-  return _memo
+  return _memo as T
 }
 
-export async function setMemo (memo: object, config: Partial<MemoOptions>): Promise<void> {
+export async function setMemo <T extends object = object> (memo: T, config: Partial<MemoOptions>): Promise<void> {
   const file = getFile(config)
 
   // Set local memo
